@@ -1,4 +1,4 @@
-name: Build Docker Images for Singbox
+name: Build Docker Images for Jucity
 on:
   workflow_dispatch:
     inputs:
@@ -13,9 +13,9 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v3
         with:
-          repository: 'SagerNet/sing-box'
+          repository: 'jucity/jucity'
           ref: ${{ github.event.inputs.tag }}
-          path: 'sing-box'
+          path: 'jucity'
 
       - name: Setup Docker Buildx
         uses: docker/setup-buildx-action@v2
@@ -31,23 +31,23 @@ jobs:
         id: metadata
         uses: docker/metadata-action@v4
         with:
-          images: ghcr.io/litjourney/singbox
+          images: ghcr.io/litjourney/jucity
       - name: Get tag to build
         id: tag
         run: |
-          echo "latest=ghcr.io/litjourney/singbox:latest" >> $GITHUB_OUTPUT
+          echo "latest=ghcr.io/litjourney/jucity:latest" >> $GITHUB_OUTPUT
           if [[ -z "${{ github.event.inputs.tag }}" ]]; then
-            echo "versioned=ghcr.io/litjourney/singbox:${{ github.ref_name }}" >> $GITHUB_OUTPUT
+            echo "versioned=ghcr.io/litjourney/jucity:${{ github.ref_name }}" >> $GITHUB_OUTPUT
           else
-            echo "versioned=ghcr.io/litjourney/singbox:${{ github.event.inputs.tag }}" >> $GITHUB_OUTPUT
+            echo "versioned=ghcr.io/litjourney/jucity:${{ github.event.inputs.tag }}" >> $GITHUB_OUTPUT
           fi
       - name: Build and release Docker images
         uses: docker/build-push-action@v4
         with:
           platforms: linux/386,linux/amd64,linux/arm64,linux/s390x
           target: dist
-          file: sb.Dockerfile
-          context: sing-box
+          file: jc.Dockerfile
+          context: jucity
           tags: |
             ${{ steps.tag.outputs.latest }}
             ${{ steps.tag.outputs.versioned }}
