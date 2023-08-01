@@ -40,10 +40,12 @@ jobs:
             date=$(git log -1 --format="%cd" --date=short | sed s/-//g)
             count=$(git rev-list --count HEAD)
             commit=$(git rev-parse --short HEAD)
-            echo "juicity_versiond=unstable-$(date).r$(count).$(commit)" >> $GITHUB_OUTPUT
+            juicity_versiond=unstable-$(date).r$(count).$(commit)
+            echo "juicity_versiond=$juicity_versiond" >> $GITHUB_OUTPUT
             echo "versioned=ghcr.io/litjourney/juicity:$juicity_versiond" >> $GITHUB_OUTPUT
           else
-            echo "juicity_versiond=${{ github.event.inputs.tag }}" >> $GITHUB_OUTPUT
+            juicity_versiond=${{ github.event.inputs.tag }}
+            echo "juicity_versiond=$juicity_versiond" >> $GITHUB_OUTPUT
             echo "versioned=ghcr.io/litjourney/juicity:$juicity_versiond" >> $GITHUB_OUTPUT
           fi
       - name: Build and release Docker images
