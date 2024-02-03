@@ -1,14 +1,10 @@
-name: Disable Checking ServerName For TailScale Derper
+name: Build Docker Images for TailScale Derper for ip
 
 on:
   workflow_dispatch:
-  push:
-    branches:
-      - main
-  pull_request:
-    branches: [main]
-  pull_request_target:
-    types: [assigned, opened, synchronize, reopened]
+    inputs:
+      tag:
+        description: "The tag version you want to build"
 
 jobs:
   deploy:
