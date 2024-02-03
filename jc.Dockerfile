@@ -1,4 +1,4 @@
-FROM golang:1.20-bullseye AS builder
+FROM golang:1.21.0-bullseye AS builder
 
 ARG JUICITY_VERSION
 
