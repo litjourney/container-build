@@ -3,7 +3,7 @@ FROM golang:1.21.1 AS builder
 
 WORKDIR /app
 
-ADD tailscale /app/tailscale
+COPY . /app/tailscale
 
 # build modified derper
 RUN cd /app/tailscale/cmd/derper && \
